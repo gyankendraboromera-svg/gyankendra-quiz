@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyan Kendra Quiz Master - Mali Sir</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #1e3c72, #2a5298); color: #fff; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .ad-banner { width: 100%; max-width: 450px; height: 60px; background: rgba(255,255,255,0.1); border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #ddd; margin-bottom: 15px; border-radius: 8px; }
+        .container { background: #ffffff; color: #333; width: 100%; max-width: 450px; border-radius: 15px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: center; }
+        .header { background: #1e3c72; color: white; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
+        .header h2 { margin: 0; font-size: 20px; }
+        .header p { margin: 4px 0 0; font-size: 13px; color: #ffd700; }
+        .stats { display: flex; justify-content: space-between; background: #f1f5f9; padding: 10px 15px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; font-size: 14px; }
+        .question-box { font-size: 17px; font-weight: 600; margin-bottom: 18px; text-align: left; color: #1e293b; line-height: 1.5; }
+        .option-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 15px; text-align: left; cursor: pointer; transition: 0.2s; font-weight: 500; }
+        .option-btn:hover { background: #e2e8f0; border-color: #1e3c72; }
+        .correct { background: #22c55e !important; color: white !important; border-color: #16a34a !important; }
+        .wrong { background: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
+        .btn-primary { background: #1e3c72; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        .btn-pay { background: #16a34a; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        .btn-redeem { background: #25D366; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
+        .vip-box { background: #fef9c3; border: 2px solid #eab308; padding: 15px; border-radius: 10px; margin-top: 15px; display: none; }
+        input[type="text"] { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #94a3b8; border-radius: 6px; font-size: 15px; text-align: center; }
+        .redeem-note { font-size: 13px; color: #475569; margin-top: 8px; background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Ad Banner Slot -->
+    <div class="ad-banner">📢 বিজ্ঞাপনৰ স্থান (Top Banner Ad Slot)</div>
+
+    <div class="container">
+        <div class="header">
+            <h2>Gyan Kendra Quiz Master</h2>
+            <p>সঞ্চালক: দীপাংকৰ মালী (Mali Sir) | বৰমেৰা</p>
+        </div>
+
+        <div class="stats">
+            <span>প্ৰশ্ন: <span id="q-num">1</span>/<span id="total-q">6</span></span>
+            <span>পইণ্ট (Coins): <span id="score">0</span> 🪙</span>
+        </div>
+
+        <div id="quiz-area">
+            <div class="question-box" id="question">প্ৰশ্ন লোড হৈ আছে...</div>
+            <div id="options"></div>
+            <button class="btn-primary" id="next-btn" style="display:none;" onclick="nextQuestion()">পৰৱৰ্তী প্ৰশ্ন ➔</button>
+        </div>
+
+        <!-- VIP Unlock Box -->
+        <div class="vip-box" id="vip-box">
+            <h3 style="margin-top:0; color:#854d0e;">🔒 VIP কুইজ আনলক কৰক</h3>
+            <p style="font-size:14px; color:#333;">বিনামূলীয়া ৩টা প্ৰশ্ন শেষ হৈছে। বাকী সকলো HSLC স্পেচিয়েল প্ৰশ্ন খেলিবলৈ মাত্ৰ <b>₹৪৯ টকা</b> পেমেণ্ট কৰক।</p>
+            <p style="font-size:14px; background:#fff; padding:8px; border-radius:6px; border:1px dashed #333;">
+                <b>UPI ID:</b> <code>7896723247@upi</code><br>
+                <small>(পেমেণ্ট কৰাৰ পাছত WhatsApp ত স্ক্ৰীণশ্বট পঠিয়ালে আনলক কোড পাব)</small>
+            </p>
+            <a href="upi://pay?pa=7896723247@upi&pn=Dipankar%20Mali&am=49&cu=INR" style="text-decoration:none;">
+                <button class="btn-pay">💳 এতিয়াই ₹৪৯ পেমেণ্ট কৰক (UPI)</button>
+            </a>
+            <input type="text" id="unlock-code" placeholder="ইয়াত আনলক কোড লিখক (যেনে: GK2026)">
+            <button class="btn-primary" onclick="verifyCode()">কোড পৰীক্ষা কৰক</button>
+        </div>
+
+        <!-- Result & Redeem Screen -->
+        <div id="result-area" style="display:none;">
+            <h2>🎉 কুইজ সমাপ্ত!</h2>
+            <p style="font-size:18px;">আপোনাৰ মুঠ পইণ্ট: <b id="final-score" style="color:#16a34a;">0</b> 🪙</p>
+            
+            <div id="redeem-section" style="display:none;">
+                <input type="text" id="player-name" placeholder="আপোনাৰ সম্পূৰ্ণ নাম লিখক">
+                <input type="text" id="player-upi" placeholder="আপোনাৰ UPI ID বা মোবাইল নম্বৰ লিখক">
+                <button class="btn-redeem" onclick="redeemOnWhatsApp()">🎁 পইণ্ট Redeem কৰক (WhatsApp)</button>
+                <div class="redeem-note">টোকা: ৫০ পইণ্ট বা তাতকৈ বেছি হ'লেহে পুৰস্কাৰ দাবী কৰিব পাৰিব।</div>
+            </div>
+
+            <p id="low-score-msg" style="color:#dc2626; font-size:14px; display:none;">পুৰস্কাৰ দাবী কৰিবলৈ কমেও ৫০ পইণ্ট লাগিব। পুনৰ চেষ্টা কৰক!</p>
+
+            <button class="btn-primary" onclick="location.reload()">পুনৰ খেলক</button>
+        </div>
+    </div>
+
+    <!-- Bottom Ad Banner Slot -->
+    <div class="ad-banner" style="margin-top:15px;">📢 বিজ্ঞাপনৰ স্থান (Bottom Banner Ad Slot)</div>
+
+    <script>
+        const questions = [
+            { q: "১. বংগ বিভাজন কেতিয়া কাৰ্যকৰী হৈছিল?", options: ["১৯০৫ চনৰ ১৬ অক্টোবৰ", "১৯০৫ চনৰ ৭ আগষ্ট", "১৯১১ চনৰ ১২ ডিচেম্বৰ", "১৯০৬ চনৰ ৩০ ডিচেম্বৰ"], answer: 0 },
+            { q: "২. 'বন্দে মাতৰম' গীতটো কোনে ৰচনা কৰিছিল?", options: ["ৰবীন্দ্ৰনাথ ঠাকুৰ", "বংকিমচন্দ্ৰ চট্টোপাধ্যায়", "লক্ষ্মীনাথ বেজবৰুৱা", "সুভাষ চন্দ্ৰ বসু"], answer: 1 },
+            { q: "৩. কাজিৰঙা ৰাষ্ট্ৰীয় উদ্যান কিহৰ বাবে বিখ্যাত?", options: ["হাতী", "এশিঙীয়া গঁড়", "ঢেকীয়াপতীয়া বাঘ", "বনৰীয়া ম'হ"], answer: 1 },
+            { q: "৪. অসমৰ প্ৰথম তেল শোধনাগাৰ ক'ত স্থাপন হৈছিল?", options: ["নুনমাটি", "ডিগবৈ", "বঙাইগাঁও", "নুমলীগড়"], answer: 1 },
+            { q: "৫. ভাৰতীয় সংবিধানৰ খচৰা কমিটিৰ সভাপতি কোন আছিল?", options: ["ড° ৰাজেন্দ্ৰ প্ৰসাদ", "জৱাহৰলাল নেহৰু", "ড° বি আৰ আম্বেদকাৰ", "চৰ্দাৰ বল্লভভাই পেটেল"], answer: 2 },
+            { q: "৬. অসম সাহিত্য সভাৰ প্ৰথম অধিৱেশন ক'ত অনুষ্ঠিত হৈছিল?", options: ["গুৱাহাটী", "যোৰহাট", "শিৱসাগৰ", "তেজপুৰ"], answer: 2 }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        let isUnlocked = false;
+        const SECRET_CODE = "GK2026";
+        const ADMIN_WHATSAPP = "917896723247"; // আপোনাৰ WhatsApp নম্বৰ
+
+        document.getElementById("total-q").innerText = questions.length;
+
+        function loadQuestion() {
+            if (currentQ === 3 && !isUnlocked) {
+                document.getElementById("quiz-area").style.display = "none";
+                document.getElementById("vip-box").style.display = "block";
+                return;
+            }
+            if (currentQ >= questions.length) {
+                showResult();
+                return;
+            }
+
+            const qData = questions[currentQ];
+            document.getElementById("q-num").innerText = currentQ + 1;
+            document.getElementById("question").innerText = qData.q;
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("next-btn").style.display = "none";
+
+            qData.options.forEach((opt, index) => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(btn, index, qData.answer);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedBtn, index, correctIndex) {
+            const allBtns = document.querySelectorAll(".option-btn");
+            allBtns.forEach(b => b.disabled = true);
+
+            if (index === correctIndex) {
+                selectedBtn.classList.add("correct");
+                score += 10;
+                document.getElementById("score").innerText = score;
+            } else {
+                selectedBtn.classList.add("wrong");
+                allBtns[correctIndex].classList.add("correct");
+            }
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            loadQuestion();
+        }
+
+        function verifyCode() {
+            const entered = document.getElementById("unlock-code").value.trim().toUpperCase();
+            if (entered === SECRET_CODE) {
+                isUnlocked = true;
+                alert("অভিনন্দন! VIP কুইজ আনলক হৈছে।");
+                document.getElementById("vip-box").style.display = "none";
+                document.getElementById("quiz-area").style.display = "block";
+                loadQuestion();
+            } else {
+                alert("ভুল কোড! অনুগ্ৰহ কৰি ₹৪৯ পেমেণ্ট কৰি সঠিক কোড লওক।");
+            }
+        }
+
+        function showResult() {
+            document.getElementById("quiz-area").style.display = "none";
+            document.getElementById("result-area").style.display = "block";
+            document.getElementById("final-score").innerText = score;
+
+            if (score >= 50) {
+                document.getElementById("redeem-section").style.display = "block";
+            } else {
+                document.getElementById("low-score-msg").style.display = "block";
+            }
+        }
+
+        function redeemOnWhatsApp() {
+            const name = document.getElementById("player-name").value.trim();
+            const upi = document.getElementById("player-upi").value.trim();
+
+            if (!name || !upi) {
+                alert("অনুগ্ৰহ কৰি আপোনাৰ নাম আৰু UPI ID / মোবাইল নম্বৰ লিখক।");
+                return;
+            }
+
+            const message = `নমস্কাৰ ছাৰ, মই Gyan Kendra Quiz খেলি পইণ্ট অৰ্জন কৰিছোঁ।\n\n*নাম:* ${name}\n*মুঠ পইণ্ট:* ${score} Coins\n*UPI ID / নম্বৰ:* ${upi}\n\nঅনুগ্ৰহ কৰি মোৰ পুৰস্কাৰটো পঠিয়াই দিয়ে যেন।`;
+            const url = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(message)}`;
+            window.open(url, "_blank");
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
